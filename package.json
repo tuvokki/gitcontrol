@@ -1,0 +1,29 @@
+{
+  "name": "gitcontrol",
+  "version": "0.0.1",
+  "description": "Provide some control over the git repos on a server without commandline access to it",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tuvokki/gitcontrol.git"
+  },
+  "keywords": [
+    "git",
+    "status",
+    "admin",
+    "remote",
+    "tool"
+  ],
+  "author": "Wouter Roosendaal",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tuvokki/gitcontrol/issues"
+  },
+  "homepage": "https://github.com/tuvokki/gitcontrol",
+  "devDependencies": {
+    "gulp": "^3.8.11"
+  }
+}
