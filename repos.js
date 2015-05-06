@@ -1,24 +1,29 @@
-var git = require('nodegit');
-var sqrt = Math.sqrt;
+var nodegit = require('nodegit');
+var path = require("path");
 
-function square(x) {
-  return x * x;
-}
+var repoDir = "/tmp/Huna_Server";
 
-var clone = function(x) {
-  var result = x * x;
-  console.log("clone result", result);
-  return result;
-},
+var repository;
 
-pull = function(x, y) {
-  console.log("pulling", x, y);
-  var result = sqrt(square(x) + square(y));
-  console.log("pull result", result);
-  return result;
-};
+// Open a repository that needs to be fetched and fast-forwarded
+nodegit.Repository.open(path.resolve(__dirname, repoDir))
+  .then(function(repo) {
+    repository = repo;
 
-module.exports = {
-  clone: clone,
-  pull: pull
-};
+    return repository.fetchAll({
+      credentials: function(url, userName) {
+        return nodegit.Cred.sshKeyFromAgent(userName);
+      },
+      certificateCheck: function() {
+        return 1;
+      }
+    });
+  })
+  // Now that we're finished fetching, go ahead and merge our local branch
+  // with the new one
+  .then(function() {
+    return repository.mergeBranches("master", "origin/master");
+  })
+  .done(function() {
+    console.log("Done!");
+  });
