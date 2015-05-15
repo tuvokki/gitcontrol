@@ -29,6 +29,7 @@
     "should": "^6.0.1"
   },
   "dependencies": {
+    "express": "^4.12.3",
     "fs-extra": "^0.18.2",
     "nodegit": "^0.3.3",
     "promisify-node": "^0.1.5"
