@@ -14,12 +14,15 @@ app.get('/', function (req, res) {
   nodegit.Repository.open(path.resolve(__dirname, repoDir))
     .then(function(repo) {
       repository = repo;
+      console.log("i'm in");
 
-      return repository.fetchAll({
-        // credentials: function(url, userName) {
-        //   return nodegit.Cred.sshKeyFromAgent("tuvokki");
-        // }
-      }, true);
+      return repo.fetch("origin", {
+        credentials: function(url, userName) {
+          console.log("fetching");
+          return nodegit.Cred.sshKeyFromAgent(userName);
+        }
+      },
+      true /* ignoreCertErrors */);
     })
     // Now that we're finished fetching, go ahead and merge our local branch
     // with the new one
