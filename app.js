@@ -24,7 +24,7 @@ router.get('/', function(req) {
               return col.find({}).toArray()
                 .then(function(items) {
                     console.log('Found ' + items.length + ' items.');
-                    return viewEngine.respond("index.html", { locals: { items: items, errors: errors } });
+                    return viewEngine.respond("index.html", { locals: { items: items } });
                     db.close().then(console.log('success'));
                 })
           })
