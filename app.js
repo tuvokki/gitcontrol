@@ -8,7 +8,24 @@ var root = require("path").join(__dirname, "public");
 var router = bogart.router();
 
 router.get('/', function(req) { 
-  var article = { };
+
+
+  // var articles = nano.db.use('articles');
+
+  // var articlelist = bogart.promisify(articles.view);
+
+  // return articlelist('article_list', 'articleView').then(function(data) {
+  //   return viewEngine.respond('posts.html', {
+  //     locals: {
+  //       pagetitle: 'all posts',
+  //       postlist: data.rows
+  //     }
+  //   });
+  // });
+
+
+
+    // var article = { };
 
     var MongoClient = require('mongodb').MongoClient;
 
@@ -17,24 +34,42 @@ router.get('/', function(req) {
       url = url + process.env.DB_USER+':'+process.env.DB_PASS+'@';
     }
     url = url + process.env.DB_HOST+':'+process.env.DB_PORT+'/'+process.env.DB_NAME
-
+    // Connect to the db
     MongoClient.connect(url, function(err, db) {
-        // Find all data
-        collection.find({})
-          // .limit(1)
-          .toArray(function(err, datathings) {
-            db.close();
-            if (err != null) {
-              return viewEngine.respond('index.html', datathings);
-            }
-            else {
-              if (d.length > 0) {
-                d[0].count = d[0].errordata.length;
-              }
-              return viewEngine.respond('index.html', datathings);
-            }
-        });
+      if(err) { return console.dir(err); }
+
+      var collection = db.collection('webhooks');
+
+      collection.find().toArray(function(err, items) {
+        db.close();
+        return viewEngine.respond('index.html', items);
+      });
+
+      // var stream = collection.find({mykey:{$ne:2}}).stream();
+      // stream.on("data", function(item) {});
+      // stream.on("end", function() {});
+
+      // collection.findOne({mykey:1}, function(err, item) {});
+
     });
+
+    // MongoClient.connect(url, function(err, db) {
+    //     // Find all data
+    //     collection.find({})
+    //       // .limit(1)
+    //       .toArray(function(err, datathings) {
+    //         db.close();
+    //         if (err != null) {
+    //           return viewEngine.respond('index.html', datathings);
+    //         }
+    //         else {
+    //           if (d.length > 0) {
+    //             d[0].count = d[0].errordata.length;
+    //           }
+    //           return viewEngine.respond('index.html', datathings);
+    //         }
+    //     });
+    // });
 
 });
 
