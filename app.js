@@ -21,7 +21,7 @@ router.get('/', function(req) {
         .then(function(db){
           return db.collection('webhooks')
             .then(function(col) {
-              return col.find({a : 1}).toArray()
+              return col.find({}).toArray()
                 .then(function(items) {
                     console.log(items);
                     return viewEngine.respond('index.html', items);
