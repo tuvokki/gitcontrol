@@ -9,28 +9,27 @@ var router = bogart.router();
 
 router.get('/', function(req) { 
     console.log('GET / - Find the saved webhooks.');
-    var MongoClient = require('mongodb').MongoClient;
-
     var url = 'mongodb://';
     if (process.env.DB_USER) {
       url = url + process.env.DB_USER+':'+process.env.DB_PASS+'@';
     }
     url = url + process.env.DB_HOST+':'+process.env.DB_PORT+'/'+process.env.DB_NAME
-    console.log('Connect to ' + url);
-    // Connect to the db
-    MongoClient.connect(url, function(err, db) {
-      if(err) { return console.dir(err); }
-      console.log('DB connection valid');
 
-      var collection = db.collection('webhooks');
+    // Read all documents 
+    return mp.MongoClient.connect(url)
+        .then(function(db){
+          return db.collection('webhooks')
+            .then(function(col) {
+              return col.find({a : 1}).toArray()
+                .then(function(items) {
+                    console.log(items);
+                    return viewEngine.respond('index.html', items);
+                    db.close().then(console.log('success'));
+                })
+          })
+    })
+    .fail(function(err) {console.log(err)});
 
-      return collection.find().toArray(function(err, items) {
-        console.log('found', items.length);
-        db.close();
-        return viewEngine.respond('index.html', items);
-      });
-
-    });
 });
 
 router.post('/payload', function(req) {
