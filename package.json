@@ -1,26 +1,27 @@
 {
-  "name": "bogart-blog",
+  "name": "gitcontrol",
   "version": "0.0.1",
-  "description": "A blog created with bogart and couchdb",
+  "description": "Provide some control over the git repos on a server without commandline access to it",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "mocha"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tuvokki/bogart-blog.git"
+    "url": "git+https://github.com/tuvokki/gitcontrol.git"
   },
   "keywords": [
     "bogart",
-    "blog",
+    "git",
     "couchdb"
   ],
   "author": "Wouter Roosendaal",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tuvokki/bogart-blog/issues"
+    "url": "https://github.com/tuvokki/gitcontrol/issues"
   },
-  "homepage": "https://github.com/tuvokki/bogart-blog#readme",
+  "homepage": "https://github.com/tuvokki/gitcontrol#readme",
   "dependencies": {
     "bogart": "^0.5.26",
     "couchdb": "^0.3.8",
