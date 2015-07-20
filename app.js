@@ -23,7 +23,7 @@ router.get('/', function(req) {
             .then(function(col) {
               return col.find({}).toArray()
                 .then(function(items) {
-                    console.log(items);
+                    console.log('Found ' + items.length + ' items.');
                     return viewEngine.respond('index.html', items);
                     db.close().then(console.log('success'));
                 })
