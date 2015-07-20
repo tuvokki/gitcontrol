@@ -24,7 +24,7 @@ router.get('/', function(req) {
 
       var collection = db.collection('webhooks');
 
-      collection.find().toArray(function(err, items) {
+      return collection.find().toArray(function(err, items) {
         console.log('found', items.length());
         db.close();
         return viewEngine.respond('index.html', items);
