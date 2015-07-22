@@ -90,7 +90,7 @@ router.get('/something',function(req){
   }
 
   // Run C:\Windows\System32\netstat.exe -an
-  var foo = new run_cmd(
+  return new run_cmd(
       'git', ['status'],
       function (me, buffer) { me.stdout += buffer.toString() },
       function () {
