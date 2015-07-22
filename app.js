@@ -79,6 +79,24 @@ router.post('/payload', function(req) {
     return bogart.json({ webhook: 'thanks' });
 });
 
+router.get('/something',function(req){
+  console.log('GET /something - Do something that matters');
+  function run_cmd(cmd, args, cb, end) {
+    var spawn = require('child_process').spawn,
+        child = spawn(cmd, args),
+        me = this;
+      child.stdout.on('data', function (buffer) { cb(me, buffer) });
+      child.stdout.on('end', end);
+  }
+
+  // Run C:\Windows\System32\netstat.exe -an
+  var foo = new run_cmd(
+      'ps', ['-axfu'],
+      function (me, buffer) { me.stdout += buffer.toString() },
+      function () { console.log(foo.stdout) }
+  );
+});
+
 var app = bogart.app();
 app.use(bogart.batteries({ secret: 'xGljGo7f4g/a1QveU8VRxhZP5Hwi2YWelejBq5h4ynM'})); // A batteries included JSGI stack including streaming request body parsing, session, flash, and much more.
 app.use(bogart.middleware.directory(root));
