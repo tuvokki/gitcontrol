@@ -91,9 +91,12 @@ router.get('/something',function(req){
 
   // Run C:\Windows\System32\netstat.exe -an
   var foo = new run_cmd(
-      'ps', ['-axfu'],
+      'git', ['status'],
       function (me, buffer) { me.stdout += buffer.toString() },
-      function () { console.log(foo.stdout) }
+      function () {
+        console.log(foo.stdout)
+        return bogart.html(foo.stdout);
+      }
   );
 });
 
