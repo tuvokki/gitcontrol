@@ -90,7 +90,7 @@ router.get('/something',function(req){
   }
 
   // Run C:\Windows\System32\netstat.exe -an
-  return new run_cmd(
+  var foo = new run_cmd(
       'git', ['status'],
       function (me, buffer) { me.stdout += buffer.toString() },
       function () {
@@ -98,6 +98,7 @@ router.get('/something',function(req){
         return bogart.html(foo.stdout);
       }
   );
+  return foo;
 });
 
 var app = bogart.app();
