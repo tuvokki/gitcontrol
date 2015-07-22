@@ -33,6 +33,7 @@ router.get('/', function(req) {
 });
 
 router.get('/update/:repo',function(req){
+  console.log('GET /update/:repo - update the :repo.');
   var Git = require("nodegit");
   var getMostRecentCommit = function(repository) {
   return repository.getBranchCommit("master");
@@ -52,6 +53,7 @@ Git.Repository.open(repoLocations[repoIndex])
   .then(getCommitMessage)
   .then(function(message) {
     console.log(message);
+    return bogart.html(message);
   });
 });
 
