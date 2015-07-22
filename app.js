@@ -30,7 +30,29 @@ router.get('/', function(req) {
           })
     })
     .fail(function(err) {console.log(err)});
+});
 
+router.get('/update/:repo',function(req){
+  var Git = require("nodegit");
+  var getMostRecentCommit = function(repository) {
+  return repository.getBranchCommit("master");
+};
+
+var getCommitMessage = function(commit) {
+  return commit.message();
+};
+
+var repos = ["bidonvullen", "gitcontrol"];
+var repoLocations = ["/webdit/backend/bidonvullen", "/webdit/backend/gitcontrol"];
+
+var repoIndex = repos.indexOf(req.params.repo);
+
+Git.Repository.open(repoLocations[repoIndex])
+  .then(getMostRecentCommit)
+  .then(getCommitMessage)
+  .then(function(message) {
+    console.log(message);
+  });
 });
 
 router.post('/payload', function(req) {
